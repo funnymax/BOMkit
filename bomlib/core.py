@@ -7,7 +7,31 @@ class Item:
         return f"Item({self.item_id}, {self.name})"
 
 
-class Bom:
+class Ingredient(Item):
+    # 包含数量、单位信息的Item
+    def __init__(self, item_id: str, name: str, quantity: float, unit: str = "piece"):
+        super().__init__(item_id, name)
+        self.quantity = quantity
+        self.unit = unit
+
+    def __str__(self) -> str:
+        return f"{self.item_id}-{self.name}: {self.quantity} {self.unit}"
+
+
+class ProductionRecipe:
+    # 包含输入和输出的Ingredient列表
+    def __init__(
+        self, recipe_id: str, output: list[Ingredient], input: list[Ingredient]
+    ):
+        self.recipe_id = recipe_id
+        self.output = output
+        self.input = input
+
+    def __str__(self):
+        return f"Recipe({self.recipe_id}):\n{self.output}\n{self.input}"
+
+
+class Repository:
     def __init__(self):
         self.items = {}
 
@@ -22,50 +46,15 @@ class Bom:
         if item_id in self.items:
             self.items[item_id] = new_item
 
-    def __str__(self):
-        items_str = "\n".join([str(item) for item in self.items.values()])
-        return f"Items:\n{items_str}"
-
-
-class Ingredient(Item):
-    # 包含数量、单位信息的Item
-    def __init__(self, item_id: str, name: str,quantity: float, unit: str = "piece"):
-        super().__init__(item_id, name)
-        self.quantity = quantity
-        self.unit = unit
-
     def __str__(self) -> str:
-        return f"{self.item.name}: {self.quantity} {self.unit}"
+        return "\n".join([str(item) for item in self.items.values()])
 
 
-class ProductionRecipe:
-    # 包含输入和输出的Ingredient列表
-    def __init__(
-        self, recipe_id: str, output: list[Ingredient], input: list[Ingredient]
-    ):
-        self.recipe_id = recipe_id
-        self.output = output
-        self.ingredients = input
-
-    def __str__(self):
-        return f"Recipe({self.recipe_id}):\n{self.output}\n{self.ingredients}"
-
-
-class RecipeBook:
+class Bom(Repository):
     def __init__(self):
-        self.recipes = {}
+        super().__init__()
 
-    def add_recipe(self, recipe):
-        self.recipes[recipe.recipe_id] = recipe
 
-    def remove_recipe(self, recipe_id):
-        if recipe_id in self.recipes:
-            del self.recipes[recipe_id]
-
-    def update_recipe(self, recipe_id, new_recipe):
-        if recipe_id in self.recipes:
-            self.recipes[recipe_id] = new_recipe
-
-    def __str__(self):
-        recipes_str = "\n".join([str(recipe) for recipe in self.recipes.values()])
-        return f"Recipes:\n{recipes_str}"
+class RecipeBook(Repository):
+    def __init__(self):
+        super().__init__()
