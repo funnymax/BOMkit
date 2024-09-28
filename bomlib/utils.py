@@ -6,10 +6,9 @@ class Calculator:
     '''
     @staticmethod
     def breakdown_product(product:Ingredient) -> Bom:
-    # 实现一个计算所需原料的算法,
+    # 实现一个计算所需原料的算法
         pass
     
-    @staticmethod
-    def 
+ 
     
     
