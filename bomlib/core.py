@@ -27,10 +27,10 @@ class Bom:
         return f"Items:\n{items_str}"
 
 
-class Ingredient:
+class Ingredient(Item):
     # 包含数量、单位信息的Item
-    def __init__(self, item: Item, quantity: float, unit: str = "piece"):
-        self.item = item
+    def __init__(self, item_id: str, name: str,quantity: float, unit: str = "piece"):
+        super().__init__(item_id, name)
         self.quantity = quantity
         self.unit = unit
 
