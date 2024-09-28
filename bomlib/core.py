@@ -17,20 +17,6 @@ class Ingredient(Item):
     def __str__(self) -> str:
         return f"{self.item_id}-{self.name}: {self.quantity} {self.unit}"
 
-
-class ProductionRecipe:
-    # 包含输入和输出的Ingredient列表
-    def __init__(
-        self, recipe_id: str, output: list[Ingredient], input: list[Ingredient]
-    ):
-        self.recipe_id = recipe_id
-        self.output = output
-        self.input = input
-
-    def __str__(self):
-        return f"Recipe({self.recipe_id}):\n{self.output}\n{self.input}"
-
-
 class Repository:
     def __init__(self):
         self.items = {}
@@ -51,10 +37,29 @@ class Repository:
 
 
 class Bom(Repository):
+    # 这个类可存放若干Ingredient，作为Recipe的输入和输出
     def __init__(self):
         super().__init__()
 
 
 class RecipeBook(Repository):
+    # 这个类可存放若干Recipe
     def __init__(self):
         super().__init__()
+
+
+class ProductionRecipe:
+    # 包含输入和输出的Ingredient列表
+    def __init__(
+        self, recipe_id: str, output: Bom, input: Bom
+    ):
+        self.recipe_id = recipe_id
+        self.output = output
+        self.input = input
+    
+    def reverse(self):
+        return ProductionRecipe(self.recipe_id, self.input, self.output)
+    
+    def __str__(self):
+        return f"Recipe({self.recipe_id}):\n{self.output}\n{self.input}"
+
